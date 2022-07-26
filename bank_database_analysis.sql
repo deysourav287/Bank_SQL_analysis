@@ -151,3 +151,52 @@ select * from bank_details where education = "primary" and job = "unknown"
 select * from bank_details where balance < 0
 /* try to find our a record who is not having house at all along with there balance */
 select housing, balance from bank_details where  housing = "no"
+
+/*automate sql*/
+DELIMITER &&
+create procedure sourav()
+begin
+ select * from bank_details;
+end &&
+
+call sourav()
+
+DELIMITER &&
+create procedure babu()
+begin
+select * from bank_details where loan = "yes";
+end &&
+
+call babu()
+
+DELIMITER &&
+create procedure avg_bal_job(IN bob varchar(30) )
+begin
+      select avg(balance) from bank_details where job = bob; 
+end &&
+call avg_bal_job("admin.")
+call avg_bal_job("management")
+call avg_bal_job("unknown")
+
+
+DELIMITER &&
+create procedure sel_edu_job1(in v1 varchar(30) , in v2 varchar(30) ) 
+BEGIN
+	select * from bank_details where education = v1 and job = v2;
+END &&
+
+call sel_edu_job1('tertiary' , 'retired')
+
+Delimiter &&
+create procedure joji(in v1 int , in v2 varchar(30) )
+begin
+  select * from bank_details where age =45 and job = "unknown";
+END &&
+
+call joji(34 , "retired")
+call joji(40,"retired")
+
+
+call sourav()bank_view
+create view bank_view as select age , job , marital , balance , education from bank_details;
+select avg(balance) from bank_view where job = 'admin.'
